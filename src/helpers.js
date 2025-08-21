@@ -1,4 +1,13 @@
-import { spawn } from 'child_process'
+import { spawn, exec } from 'child_process'
+
+export function isInPath(cmd) {
+  return new Promise((resolve) => {
+    const check = process.platform === "win32" ? "where" : "which";
+    exec(`${check} ${cmd}`, (error) => {
+      resolve(!error);
+    });
+  });
+}
 
 export const execShellCommand = (cmd) => {
   return new Promise((resolve, reject) => {
